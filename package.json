@@ -1,0 +1,61 @@
+{
+  "name": "github-contributions",
+  "version": "1.0.0",
+  "description": "github contributions",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "release": "standard-version",
+    "test": "echo \"skip tests\""
+  },
+  "keywords": [
+    "github",
+    "contributions"
+  ],
+  "homepage": "https://github.com/realkimmy/github-contributions",
+  "bugs": {
+    "url": "https://github.com/realkimmy/github-contributions/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/realkimmy/github-contributions.git"
+  },
+  "author": {
+    "name": "Ying Wang",
+    "email": "upcwangying@gmail.com",
+    "url": "https://github.com/realkimmy"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "babel-eslint": "10.0.3",
+    "cheerio": "^1.0.0-rc.3",
+    "lodash": "^4.17.19",
+    "node-fetch": "^2.6.0",
+    "vercel": "^21.3.3"
+  },
+  "devDependencies": {
+    "eslint": "6.7.1",
+    "eslint-config-prettier": "6.7.0",
+    "eslint-plugin-prettier": "3.1.1",
+    "husky": "3.1.0",
+    "lint-staged": "9.5.0",
+    "prettier": "1.19.1",
+    "sort-package-json": "1.36.0",
+    "standard-version": "^7.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "package.json": [
+      "sort-package-json",
+      "git add"
+    ],
+    "api/**/*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
