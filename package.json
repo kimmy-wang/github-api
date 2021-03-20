@@ -5,6 +5,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
+    "develop": "vercel dev",
     "release": "standard-version",
     "test": "echo \"skip tests\""
   },
