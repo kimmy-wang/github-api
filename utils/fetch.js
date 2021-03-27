@@ -43,7 +43,15 @@ export async function fetchPinnedData(username) {
     const $color = $day.find('.repo-language-color')
     const $stars = $day.find('[aria-label=stars]')
     const $forks = $day.find('[aria-label=forks]')
+    const owner = $day
+      .find('.repo')
+      .parent('.text-bold')
+      .attr('href')
+      .substring(1)
+      .split('/')[0]
     return {
+      owner,
+      avatar: `https://github.com/${owner}.png`,
       name: $repo.text().trim(),
       description: $description ? $description.text().trim() : '',
       language: $language.text().trim(),
