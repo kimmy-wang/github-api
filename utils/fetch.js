@@ -29,3 +29,48 @@ export async function fetchData(username, from, to) {
 
   return $days.get().map(parseDay)
 }
+
+export async function fetchPinnedData(username) {
+  const data = await fetch(`https://github.com/${username}`)
+  const $ = cheerio.load(await data.text())
+  const $days = $('ol.js-pinned-items-reorder-list div.pinned-item-list-item-content')
+
+  const parseDay = day => {
+    const $day = $(day)
+    const $repo = $day.find('.repo')
+    const $description = $day.find('.pinned-item-desc')
+    const $language = $day.find('[itemprop=programmingLanguage]')
+    const $color = $day.find('.repo-language-color')
+    const $stars = $day.find('[aria-label=stars]')
+    const $forks = $day.find('[aria-label=forks]')
+    return {
+      name: $repo.text().trim(),
+      description: $description ? $description.text().trim() : '',
+      language: $language.text().trim(),
+      color: $color
+        .attr('style')
+        .replace('background-color: ', '')
+        .trim(),
+      stars: !$stars
+        ? 0
+        : parseInt(
+            $stars
+              .parent('.pinned-item-meta.Link--muted')
+              .text()
+              .trim(),
+            10,
+          ),
+      forks: !$forks
+        ? 0
+        : parseInt(
+            $forks
+              .parent('.pinned-item-meta.Link--muted')
+              .text()
+              .trim(),
+            10,
+          ),
+    }
+  }
+
+  return !$days ? [] : $days.get().map(parseDay)
+}

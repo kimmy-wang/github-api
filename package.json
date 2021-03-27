@@ -1,7 +1,7 @@
 {
   "name": "github-contributions",
   "version": "1.0.0",
-  "description": "github contributions",
+  "description": "github api",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,8 @@
   },
   "keywords": [
     "github",
-    "contributions"
+    "contributions",
+    "pinned"
   ],
   "homepage": "https://github.com/realkimmy/github-contributions",
   "bugs": {
