@@ -30,6 +30,34 @@ export async function fetchData(username, from, to) {
   return $days.get().map(parseDay)
 }
 
+export async function fetchV2Data(username, from, to) {
+  let url = `https://github.com/${username}`
+  if (from && to) {
+    url += `?from=${from}&to=${to}`
+  }
+  const data = await fetch(url)
+  const $ = cheerio.load(await data.text())
+  const $total = $('.js-yearly-contributions .position-relative h2')
+  const $days = $('svg.js-calendar-graph-svg rect.ContributionCalendar-day')
+
+  const parseDay = day => {
+    const $day = $(day)
+    return {
+      date: $day.attr('data-date'),
+      count: parseInt($day.attr('data-count') || 0, 10),
+      color: COLOR_MAP[$day.attr('data-level')],
+    }
+  }
+
+  return {
+    total: $($total.get()[0])
+      .text()
+      .replace(/\s+/g, ' ')
+      .substring(1),
+    data: $days.get().map(parseDay),
+  }
+}
+
 export async function fetchPinnedData(username) {
   const data = await fetch(`https://github.com/${username}`)
   const $ = cheerio.load(await data.text())
