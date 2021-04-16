@@ -54,7 +54,7 @@ export async function fetchV2Data(username, from, to) {
       .text()
       .replace(/\s+/g, ' ')
       .substring(1),
-    data: $days.get().map(parseDay),
+    contributions: $days.get().map(parseDay),
   }
 }
 
